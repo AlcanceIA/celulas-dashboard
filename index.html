@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard de Células — Alcance Curitiba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #1e40af;
+  --primary-light: #3b82f6;
+  --primary-bg: #eff6ff;
+  --primary-border: #bfdbfe;
+  --green: #16a34a;
+  --green-bg: #f0fdf4;
+  --green-border: #bbf7d0;
+  --amber: #d97706;
+  --amber-bg: #fffbeb;
+  --amber-border: #fde68a;
+  --red: #dc2626;
+  --red-bg: #fef2f2;
+  --red-border: #fecaca;
+  --orange: #ea580c;
+  --orange-bg: #fff7ed;
+  --orange-border: #fed7aa;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow: 0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+}
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-900);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+}
+/* HEADER */
+header {
+  background: #fff;
+  border-bottom: 2px solid var(--primary-border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: 16px;
+}
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-logo {
+  width: 36px;
+  height: 36px;
+  background: var(--primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.header-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+.header-subtitle {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-top: 1px;
+}
+.header-meta {
+  font-size: 12px;
+  color: var(--gray-400);
+  white-space: nowrap;
+}
+/* TABS NAV */
+.tabs-nav {
+  background: #fff;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 0 24px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tabs-nav::-webkit-scrollbar { height: 2px; }
+.tabs-nav::-webkit-scrollbar-track { background: transparent; }
+.tabs-nav::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 2px; }
+.tab-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-500);
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+.tab-btn:hover { color: var(--primary); }
+.tab-btn.active {
+  color: var(--primary);
+  font-weight: 700;
+  border-bottom-color: var(--primary);
+}
+/* MAIN CONTENT */
+main { padding: 24px; max-width: 1200px; margin: 0 auto; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+/* SECTION */
+.section { margin-bottom: 32px; }
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 6px;
+}
+.section-subtitle {
+  font-size: 14px;
+  color: var(--gray-500);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+/* CARDS */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  padding: 20px;
+}
+.card-lg { padding: 24px; }
+.card-sm { padding: 16px; }
+/* GRID HELPERS */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+@media (max-width: 768px) {
+  main { padding: 16px; }
+  .grid-2, .grid-3, .grid-4, .grid-6, .grid-auto { grid-template-columns: 1fr; }
+  .tab-btn { padding: 12px 14px; font-size: 12px; }
+  header { padding: 12px 16px; }
+}
+@media (max-width: 900px) and (min-width: 769px) {
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-6 { grid-template-columns: repeat(3, 1fr); }
+}
+/* KPI CARDS */
+.kpi-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.kpi-card.kpi-blue::before { background: var(--primary); }
+.kpi-card.kpi-green::before { background: var(--green); }
+.kpi-card.kpi-red::before { background: var(--red); }
+.kpi-card.kpi-amber::before { background: var(--amber); }
+.kpi-card.kpi-gray::before { background: var(--gray-400); }
+.kpi-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-bottom: 8px;
+}
+.kpi-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--gray-900);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.kpi-value.kpi-value-green { color: var(--green); }
+.kpi-value.kpi-value-red { color: var(--red); }
+.kpi-value.kpi-value-blue { color: var(--primary); }
+.kpi-value.kpi-value-amber { color: var(--amber); }
+.kpi-note {
+  font-size: 12px;
+  color: var(--gray-500);
+  line-height: 1.4;
+}
+.kpi-source {
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-top: 8px;
+  font-style: italic;
+}
+/* KPI MAIN LARGE */
+.kpi-main {
+  padding: 24px;
+  grid-column: span 1;
+}
+.kpi-main .kpi-value { font-size: 40px; }
+/* ALERT BANNERS */
+.alert {
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.alert-amber { background: var(--amber-bg); border-color: var(--amber); color: #78350f; }
+.alert-red { background: var(--red-bg); border-color: var(--red); color: #7f1d1d; }
+.alert-blue { background: var(--primary-bg); border-color: var(--primary); color: #1e3a8a; }
+.alert-green { background: var(--green-bg); border-color: var(--green); color: #14532d; }
+.alert-title { font-weight: 700; margin-bottom: 4px; }
+/* FAQ ACCORDION */
+.faq-item {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.faq-question {
+  width: 100%;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 16px 20px;
+  text-align: left;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-900);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  transition: background .15s;
+}
+.faq-question:hover { background: var(--gray-50); }
+.faq-question.open { background: var(--primary-bg); color: var(--primary); }
+.faq-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: transform .2s, background .15s;
+  color: var(--gray-600);
+}
+.faq-question.open .faq-icon {
+  background: var(--primary);
+  color: #fff;
+  transform: rotate(45deg);
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease, padding .3s ease;
+  background: #fff;
+}
+.faq-answer.open {
+  max-height: 400px;
+  padding: 0 20px 16px;
+}
+.faq-answer p {
+  font-size: 14px;
+  color: var(--gray-700);
+  line-height: 1.6;
+}
+/* FILE CARDS */
+.file-card {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.file-card-icon { font-size: 24px; }
+.file-card-name { font-size: 14px; font-weight: 700; color: var(--gray-900); }
+.file-card-count {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary);
+}
+.file-card-desc { font-size: 12px; color: var(--gray-500); }
+/* LEGEND */
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+}
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.legend-text { font-size: 13px; color: var(--gray-700); }
+/* CHECKLIST */
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.checklist li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 14px;
+  color: var(--gray-700);
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+}
+.checklist li .icon { flex-shrink: 0; font-size: 16px; }
+/* CHART CONTAINERS */
+.chart-wrapper {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.chart-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 4px;
+}
+.chart-note {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.chart-note.warning {
+  color: var(--amber);
+  font-weight: 500;
+}
+canvas { max-width: 100%; }
+/* YEAR FILTER BUTTONS */
+.year-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.year-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--gray-300);
+  border-radius: 20px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all .15s;
+  font-family: inherit;
+}
+.year-btn:hover { border-color: var(--primary); color: var(--primary); }
+.year-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+/* DROPDOWN */
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.filter-label { font-size: 14px; font-weight: 600; color: var(--gray-700); }
+select.filter-select {
+  padding: 8px 14px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font-size: 14px;
+  color: var(--gray-700);
+  cursor: pointer;
+  font-family: inherit;
+  outline: none;
+  min-width: 260px;
+}
+select.filter-select:focus { border-color: var(--primary); }
+/* TABLE */
+.table-wrapper {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th {
+  background: var(--gray-50);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 1px solid var(--gray-200);
+}
+td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--gray-700);
+  border-bottom: 1px solid var(--gray-100);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--gray-50); }
+.td-mono { font-family: 'Courier New', monospace; font-weight: 600; }
+.td-right { text-align: right; font-weight: 600; }
+.td-center { text-align: center; }
+/* PROGRESS BAR */
+.progress-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.progress-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--gray-200);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width .3s;
+}
+.progress-pct { font-size: 12px; font-weight: 700; min-width: 36px; text-align: right; }
+/* STATUS BADGES */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.badge-green { background: var(--green-bg); color: var(--green); }
+.badge-amber { background: var(--amber-bg); color: var(--amber); }
+.badge-red { background: var(--red-bg); color: var(--red); }
+.badge-gray { background: var(--gray-100); color: var(--gray-500); }
+/* SPECIAL CARDS */
+.incident-card {
+  background: #fff;
+  border: 2px solid var(--red);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.incident-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.incident-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+.incident-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--red);
+  line-height: 1.3;
+}
+.incident-section { margin-top: 14px; }
+.incident-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: 6px;
+}
+.incident-section p {
+  font-size: 14px;
+  color: var(--gray-700);
+  line-height: 1.6;
+}
+.incident-unknowns {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+.incident-unknowns li {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--gray-700);
+  padding: 10px 14px;
+  background: var(--red-bg);
+  border-radius: var(--radius-sm);
+}
+.warning-card {
+  background: #fff;
+  border: 1px solid var(--amber-border);
+  border-left: 4px solid var(--amber);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.warning-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--amber);
+  margin-bottom: 8px;
+}
+.warning-card p {
+  font-size: 14px;
+  color: var(--gray-700);
+  line-height: 1.6;
+}
+/* IMPACT CARDS */
+.impact-card {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 20px;
+  border-top: 4px solid var(--primary);
+}
+.impact-number {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.impact-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 6px;
+}
+.impact-text { font-size: 13px; color: var(--gray-600); line-height: 1.5; }
+/* DIFF TABLE (sistema inconsistency) */
+.diff-table-wrapper {
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-top: 12px;
+}
+.diff-table-wrapper th { background: #fef3c7; }
+/* CTA BOX */
+.cta-box {
+  background: var(--primary-bg);
+  border: 1px solid var(--primary-border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-top: 20px;
+}
+.cta-box-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+.cta-box p {
+  font-size: 14px;
+  color: var(--gray-700);
+  line-height: 1.6;
+}
+/* FOOTER */
+.tab-footer {
+  margin-top: 32px;
+  padding: 14px 0;
+  border-top: 1px solid var(--gray-200);
+  font-size: 12px;
+  color: var(--gray-400);
+  text-align: center;
+  line-height: 1.5;
+}
+/* EXPORT BUTTON */
+#export-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 200;
+  font-family: inherit;
+  transition: background .15s, transform .15s;
+}
+#export-btn:hover { background: #1d3a8a; transform: translateY(-1px); }
+#export-btn:active { transform: translateY(0); }
+/* STATUS ROW in ABA 5 */
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.status-row.green { background: var(--green-bg); border: 1px solid var(--green-border); }
+.status-row.amber { background: var(--amber-bg); border: 1px solid var(--amber-border); }
+.status-row.orange { background: var(--orange-bg); border: 1px solid var(--orange-border); }
+.status-row.red { background: var(--red-bg); border: 1px solid var(--red-border); }
+.status-row.gray { background: var(--gray-100); border: 1px solid var(--gray-300); }
+.status-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.dot-green { background: var(--green); }
+.dot-amber { background: var(--amber); }
+.dot-orange { background: var(--orange); }
+.dot-red { background: var(--red); }
+.dot-gray { background: var(--gray-400); }
+.status-row-label { font-size: 14px; font-weight: 600; color: var(--gray-900); flex: 1; }
+.status-row-count { font-size: 18px; font-weight: 800; }
+.status-row.green .status-row-count { color: var(--green); }
+.status-row.amber .status-row-count { color: var(--amber); }
+.status-row.orange .status-row-count { color: var(--orange); }
+.status-row.red .status-row-count { color: var(--red); }
+.status-row.gray .status-row-count { color: var(--gray-500); }
+.status-row-pct { font-size: 12px; color: var(--gray-500); font-weight: 500; }
+/* INFO BOX */
+.info-box {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.info-box p { font-size: 14px; color: var(--gray-700); line-height: 1.6; }
+.info-box strong { color: var(--gray-900); }
+/* INLINE PAIR */
+.inline-pair {
+  display: flex;
+  gap: 4px;
+  align-items: baseline;
+}
+.inline-pair .main-val { font-size: 28px; font-weight: 800; }
+.inline-pair .sub-val { font-size: 16px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">
+    <div class="header-logo">A</div>
+    <div>
+      <div class="header-title">Dashboard de Células — Alcance Curitiba</div>
+      <div class="header-subtitle">Dados exportados do InChurch em 10/05/2026</div>
+    </div>
+  </div>
+  <div class="header-meta">Atualizado em 10 mai 2026</div>
+</header>
+
+<nav class="tabs-nav" id="tabs-nav">
+  <button class="tab-btn active" data-tab="0">📋 Antes de Ler</button>
+  <button class="tab-btn" data-tab="1">📊 Visão Geral</button>
+  <button class="tab-btn" data-tab="2">🌐 Por Rede</button>
+  <button class="tab-btn" data-tab="3">📈 Frequência</button>
+  <button class="tab-btn" data-tab="4">⚠️ Falhas do Sistema</button>
+  <button class="tab-btn" data-tab="5">🔄 Problema do Reset</button>
+</nav>
+
+<main>
+
+<!-- ======================================================= -->
+<!-- ABA 0 — ANTES DE LER -->
+<!-- ======================================================= -->
+<div class="tab-panel active" id="tab-0">
+
+  <div class="section">
+    <div class="section-title">O que é este relatório?</div>
+    <div class="card card-lg" style="border-left: 4px solid var(--primary);">
+      <p style="font-size: 15px; color: var(--gray-700); line-height: 1.7;">
+        Este painel mostra os dados que o sistema InChurch exportou em <strong>10 de maio de 2026</strong>.
+        Analisamos os números como eles estão no sistema — sem inventar, sem estimar, sem supor.
+        Se um dado está errado no sistema, ele aparece errado aqui também. Nosso papel é mostrar
+        o que os dados dizem, não explicar por que o sistema faz isso.
+      </p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">O que analisamos?</div>
+    <div class="section-subtitle">Seis arquivos foram exportados do InChurch para esta análise:</div>
+    <div class="grid-3">
+      <div class="file-card">
+        <div class="file-card-icon">📁</div>
+        <div class="file-card-name">Células</div>
+        <div class="file-card-count">397 registros</div>
+        <div class="file-card-desc">Lista de todas as células cadastradas</div>
+      </div>
+      <div class="file-card">
+        <div class="file-card-icon">📁</div>
+        <div class="file-card-name">Participantes</div>
+        <div class="file-card-count">6.376 registros</div>
+        <div class="file-card-desc">Pessoas vinculadas a uma célula</div>
+      </div>
+      <div class="file-card">
+        <div class="file-card-icon">📁</div>
+        <div class="file-card-name">Líderes e Auxiliares</div>
+        <div class="file-card-count">871 registros</div>
+        <div class="file-card-desc">Quem lidera as células</div>
+      </div>
+      <div class="file-card">
+        <div class="file-card-icon">📁</div>
+        <div class="file-card-name">Supervisores</div>
+        <div class="file-card-count">169 registros</div>
+        <div class="file-card-desc">Quem supervisiona os líderes</div>
+      </div>
+      <div class="file-card">
+        <div class="file-card-icon">📁</div>
+        <div class="file-card-name">Membros</div>
+        <div class="file-card-count">12.752 registros</div>
+        <div class="file-card-desc">Todos os membros da Igreja (módulo separado)</div>
+      </div>
+      <div class="file-card">
+        <div class="file-card-icon">📁</div>
+        <div class="file-card-name">Redes</div>
+        <div class="file-card-count">14 registros</div>
+        <div class="file-card-desc">As 14 redes pastorais</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">⚠️ O que NÃO fizemos</div>
+    <ul class="checklist">
+      <li>
+        <span class="icon">❌</span>
+        <span>Não cruzamos dados entre arquivos — isso exigiria CPF preenchido, que está em apenas 21% dos cadastros</span>
+      </li>
+      <li>
+        <span class="icon">❌</span>
+        <span>Não corrigimos inconsistências — mostramos como estão no sistema</span>
+      </li>
+      <li>
+        <span class="icon">❌</span>
+        <span>Não estimamos nem projetamos nenhum número</span>
+      </li>
+      <li>
+        <span class="icon">✅</span>
+        <span><strong>Cada número apresentado tem uma fonte exata que pode ser verificada</strong></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Perguntas Frequentes</div>
+    <div class="section-subtitle">Clique em cada pergunta para ver a resposta.</div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Por que Participantes tem 6.376 e Membros tem 12.752 — não deveriam ser o mesmo número?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Não, porque são dois registros diferentes. O módulo de <strong>Membros</strong> responde: "Quem é membro desta Igreja?" (12.752 pessoas). O módulo de <strong>Participantes</strong> responde: "Quem está vinculado a uma célula?" (6.376 vínculos). Uma pessoa pode ser membro sem estar em célula. E uma pessoa pode estar em célula sem ser membro formal (como visitantes e familiares). O InChurch não cruza esses dois módulos automaticamente.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Por que o mesmo sistema dá 6.376 num lugar e 6.346 em outro?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>O módulo de Participantes mostra <strong>6.376</strong> pessoas em células. O módulo de Redes, quando somamos o campo "Número de Participantes" das 14 redes, dá <strong>6.346</strong>. São 30 pessoas de diferença dentro do mesmo sistema. Não conseguimos explicar essa diferença só com os dados — ela existe e está documentada.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Posso confiar nesses números para tomar decisões?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Eles são os números que o sistema gerou em 10/05/2026. Use-os como ponto de partida, não como verdade absoluta. O próprio sistema tem inconsistências internas (veja a aba "Falhas do Sistema"). Para decisões estratégicas importantes, recomendamos validar os dados diretamente com os líderes de cada rede.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        O que aconteceu com o incidente dos perfis "Bruno"?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Em maio de 2026, o sistema mesclou automaticamente vários perfis de membros que tinham apenas o primeiro nome "Bruno" no cadastro — tratando todos como a mesma pessoa. Isso aconteceu em menos de 3 segundos. Dados pessoais (como CPF e RG) de pessoas diferentes podem ter sido expostos para outras. O InChurch diz ter revertido, mas há dúvidas sobre como garantir que os dados voltaram para as pessoas certas se os cadastros tinham só o primeiro nome. Veja a aba "Falhas do Sistema" para detalhes.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Por que não sabemos o número exato de pessoas únicas em células?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Porque o campo CPF — que seria o identificador único de cada pessoa — está preenchido em apenas <strong>21% dos participantes</strong>. Sem esse campo, não há como saber com certeza se "João Silva" no módulo de Participantes é o mesmo "João Silva" no módulo de Líderes. O sistema trata cada módulo de forma independente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Legenda de cores</div>
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--green);"></div>
+        <div class="legend-text"><strong>Verde</strong> = dado confiável ou situação boa</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--amber);"></div>
+        <div class="legend-text"><strong>Âmbar</strong> = requer atenção</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--red);"></div>
+        <div class="legend-text"><strong>Vermelho</strong> = problema identificado ou dado ausente</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--primary);"></div>
+        <div class="legend-text"><strong>Azul</strong> = informação neutra</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-footer">
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- ABA 1 — VISÃO GERAL -->
+<!-- ======================================================= -->
+<div class="tab-panel" id="tab-1">
+
+  <div class="section-title" style="margin-bottom: 6px;">Visão Geral</div>
+  <div class="section-subtitle">
+    Estes são os números que o InChurch registra para cada módulo. Cada número vem de um arquivo diferente — eles não se somam automaticamente.
+  </div>
+
+  <!-- KPIs PRINCIPAIS -->
+  <div class="grid-3" style="margin-bottom: 20px;">
+    <div class="kpi-card kpi-main kpi-green">
+      <div class="kpi-label">Células ativas</div>
+      <div class="kpi-value kpi-value-green">391</div>
+      <div style="display:flex; gap:10px; align-items:center; margin-top:6px;">
+        <span class="badge badge-green">✓ Ativas</span>
+        <span class="badge badge-red">6 inativas</span>
+      </div>
+      <div class="kpi-source">Fonte: arquivo Células</div>
+    </div>
+    <div class="kpi-card kpi-main kpi-blue">
+      <div class="kpi-label">Pessoas em células</div>
+      <div class="kpi-value kpi-value-blue">6.376</div>
+      <div class="kpi-note">registradas no módulo Participantes</div>
+      <div class="kpi-source">Fonte: arquivo Participantes</div>
+    </div>
+    <div class="kpi-card kpi-main kpi-blue">
+      <div class="kpi-label">Líderes e Auxiliares</div>
+      <div class="kpi-value kpi-value-blue">871</div>
+      <div class="kpi-note">registros no sistema</div>
+      <div class="kpi-source">Fonte: arquivo Líderes</div>
+    </div>
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-label">Redes Pastorais</div>
+      <div class="kpi-value">14</div>
+      <div class="kpi-source">Fonte: arquivo Redes</div>
+    </div>
+    <div class="kpi-card kpi-gray">
+      <div class="kpi-label">Membros da Igreja</div>
+      <div class="kpi-value">12.752</div>
+      <div class="kpi-note" style="color: var(--amber); font-weight: 500;">módulo separado — não é a soma de células</div>
+      <div class="kpi-source">Fonte: arquivo Membros</div>
+    </div>
+    <div class="kpi-card kpi-gray">
+      <div class="kpi-label">Registros de Supervisores</div>
+      <div class="kpi-value">169</div>
+      <div class="kpi-note">casais = 2 pessoas por registro. Total estimado: ~317 indivíduos</div>
+      <div class="kpi-source">Fonte: arquivo Supervisores</div>
+    </div>
+  </div>
+
+  <!-- ALERTA INCONSISTÊNCIA -->
+  <div class="alert alert-amber" style="margin-bottom: 24px;">
+    <div class="alert-title">⚠️ Atenção — Inconsistência interna do sistema</div>
+    O módulo Redes mostra <strong>6.346 participantes</strong> (soma dos 14 campos), enquanto o módulo Participantes mostra <strong>6.376</strong> — uma diferença de <strong>30 pessoas</strong> dentro do mesmo sistema InChurch.
+  </div>
+
+  <!-- GRÁFICO POR ANO -->
+  <div class="chart-wrapper">
+    <div class="chart-title">Quantas pessoas se cadastraram em células a cada ano</div>
+    <div class="chart-note">Cada barra mostra novos vínculos criados naquele ano. Use os botões abaixo para filtrar.</div>
+    <div class="year-filter" id="year-filter">
+      <button class="year-btn active" data-year="all">Todos os anos</button>
+      <button class="year-btn" data-year="2021">2021</button>
+      <button class="year-btn" data-year="2022">2022</button>
+      <button class="year-btn" data-year="2023">2023</button>
+      <button class="year-btn" data-year="2024">2024</button>
+      <button class="year-btn" data-year="2025">2025</button>
+      <button class="year-btn" data-year="2026">2026 (parcial)</button>
+    </div>
+    <div style="height: 260px;">
+      <canvas id="chartPorAno"></canvas>
+    </div>
+    <div class="chart-note" style="margin-top: 10px; margin-bottom: 0;">
+      ⚠️ 2026 = dados parciais até maio de 2026
+    </div>
+  </div>
+
+  <!-- GRÁFICO DIAS -->
+  <div class="grid-2">
+    <div class="chart-wrapper" style="margin-bottom:0;">
+      <div class="chart-title">Em que dia a maioria das células se reúne</div>
+      <div class="chart-note">Quantidade de células por dia da semana</div>
+      <div style="height: 220px;">
+        <canvas id="chartDias"></canvas>
+      </div>
+    </div>
+    <div class="chart-wrapper" style="margin-bottom:0;">
+      <div class="chart-title">Tipos de células existentes</div>
+      <div class="chart-note">Categorias conforme cadastro no sistema</div>
+      <div style="height: 220px;">
+        <canvas id="chartCategorias"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 20px;"></div>
+
+  <!-- GRÁFICO PERFIL -->
+  <div class="chart-wrapper">
+    <div class="chart-title">Perfil dos participantes</div>
+    <div class="chart-note">
+      Como os 6.376 participantes estão classificados no sistema.<br>
+      <span style="color: var(--amber); font-weight: 500;">⚠️ 60% dos participantes não têm perfil preenchido (campo "Sem Perfil").</span>
+    </div>
+    <div style="max-width: 400px; margin: 0 auto; height: 260px;">
+      <canvas id="chartPerfil"></canvas>
+    </div>
+  </div>
+
+  <!-- NÚMEROS ADICIONAIS -->
+  <div class="grid-4">
+    <div class="kpi-card kpi-amber">
+      <div class="kpi-label">Visitantes</div>
+      <div class="kpi-value">93</div>
+      <div class="kpi-source">Fonte: arquivo Células</div>
+    </div>
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-label">Novos Convertidos</div>
+      <div class="kpi-value">56</div>
+      <div class="kpi-source">Fonte: arquivo Células</div>
+    </div>
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-label">Total de Células</div>
+      <div class="kpi-value">397</div>
+      <div class="kpi-note">391 ativas + 6 inativas</div>
+    </div>
+    <div class="kpi-card kpi-gray">
+      <div class="kpi-label">Supervisores (indivíduos)</div>
+      <div class="kpi-value">317</div>
+      <div class="kpi-note">estimativa: 169 registros × 2 por casal</div>
+    </div>
+  </div>
+
+  <div class="tab-footer">
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- ABA 2 — POR REDE -->
+<!-- ======================================================= -->
+<div class="tab-panel" id="tab-2">
+
+  <div class="section-title" style="margin-bottom: 6px;">Por Rede Pastoral</div>
+  <div class="section-subtitle">
+    Como as 14 redes pastorais estão distribuídas. Cada rede tem um casal responsável.
+  </div>
+
+  <div class="filter-row">
+    <span class="filter-label">Ver rede:</span>
+    <select class="filter-select" id="rede-filter" onchange="filterRede()">
+      <option value="all">Todas as redes</option>
+      <option value="PRS REGINALDO E ROSILENE SILVA">PRS REGINALDO E ROSILENE SILVA</option>
+      <option value="PRS RENATO E MARILZA HENRIQUES">PRS RENATO E MARILZA HENRIQUES</option>
+      <option value="PRS RAFHAEL E MARESSA BARBOSA">PRS RAFHAEL E MARESSA BARBOSA</option>
+      <option value="GUSTAVO E KÁTIMA SILVA">GUSTAVO E KÁTIMA SILVA</option>
+      <option value="MARCOS E ANGÉLICA BOLDT">MARCOS E ANGÉLICA BOLDT</option>
+      <option value="PRS KELLER E SILMARA MAINARDES">PRS KELLER E SILMARA MAINARDES</option>
+      <option value="PRS RAFAEL E LENARA PADILHA">PRS RAFAEL E LENARA PADILHA</option>
+      <option value="PRS MARCELO E JOSIANE BOMFIM">PRS MARCELO E JOSIANE BOMFIM</option>
+      <option value="PAULO E BRUNA SEPP">PAULO E BRUNA SEPP</option>
+      <option value="PRS MARCELO E ELOIZA NEVES">PRS MARCELO E ELOIZA NEVES</option>
+      <option value="THIAGO E GRAZIELE PEREIRA">THIAGO E GRAZIELE PEREIRA</option>
+      <option value="ANDRÉ E DANIELA HUMMEL">ANDRÉ E DANIELA HUMMEL</option>
+      <option value="PRS MARCIANO E ADRIANA ORTENCIO">PRS MARCIANO E ADRIANA ORTENCIO</option>
+      <option value="INTEGRAÇÃO">INTEGRAÇÃO</option>
+    </select>
+  </div>
+
+  <div class="chart-wrapper">
+    <div class="chart-title">Células e Participantes por Rede</div>
+    <div class="chart-note">Comparativo entre número de células e participantes por rede pastoral</div>
+    <div style="height: 380px;">
+      <canvas id="chartRedes"></canvas>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table id="table-redes">
+      <thead>
+        <tr>
+          <th>Rede Pastoral</th>
+          <th class="td-right">Células</th>
+          <th class="td-right">Participantes</th>
+          <th class="td-right">Média por célula</th>
+        </tr>
+      </thead>
+      <tbody id="table-redes-body">
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-note" style="margin-top: -12px;">
+    Fonte: arquivo Gestao_de_Membresia_Redes — InChurch 10/05/2026
+  </div>
+
+  <div class="tab-footer">
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- ABA 3 — FREQUÊNCIA -->
+<!-- ======================================================= -->
+<div class="tab-panel" id="tab-3">
+
+  <div class="section-title" style="margin-bottom: 6px;">Frequência das Células</div>
+  <div class="section-subtitle">
+    Com que frequência as células se reúnem, segundo o campo "Frequência Mensal" cadastrado no sistema.
+  </div>
+
+  <div class="info-box">
+    <p>Este número é a frequência média de presença registrada em cada célula no mês. <strong>Quanto maior, melhor.</strong> Uma frequência de 100% significa que todos os membros compareceram em todas as reuniões do mês.</p>
+  </div>
+
+  <!-- MÉDIA EM DESTAQUE -->
+  <div style="display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;">
+    <div class="kpi-card kpi-amber" style="flex: 1; min-width: 180px;">
+      <div class="kpi-label">Frequência média geral</div>
+      <div class="kpi-value kpi-value-amber">60,7%</div>
+      <div class="kpi-note">média das 391 células ativas</div>
+    </div>
+    <div class="alert alert-amber" style="flex: 2; min-width: 260px; margin-bottom: 0; display: flex; align-items: center;">
+      <div>
+        <div class="alert-title">⚠️ Importante sobre este número</div>
+        Este número é autopreenchido pelos líderes no sistema. Ele <strong>não é calculado automaticamente</strong> a partir de registro de presença real — depende da consistência do preenchimento de cada líder.
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTOGRAMA -->
+  <div class="chart-wrapper">
+    <div class="chart-title">Distribuição da frequência por faixa</div>
+    <div class="chart-note">
+      Quantas células têm cada nível de frequência.<br>
+      <span style="color: var(--red);">■ Vermelho (0–49%)</span> = frequência baixa — preocupante &nbsp;|&nbsp;
+      <span style="color: var(--amber);">■ Âmbar (50–69%)</span> = frequência média &nbsp;|&nbsp;
+      <span style="color: var(--green);">■ Verde (70–100%)</span> = boa frequência
+    </div>
+    <div style="height: 280px;">
+      <canvas id="chartFreqDist"></canvas>
+    </div>
+  </div>
+
+  <!-- LIDERANÇA -->
+  <div class="section">
+    <div class="section-title">Hierarquia de Supervisores</div>
+    <div class="section-subtitle">Como os 169 registros de supervisores estão distribuídos por cargo/função</div>
+    <div class="chart-wrapper">
+      <div class="chart-title">Cargos mais comuns entre supervisores</div>
+      <div class="chart-note">Quantidade de supervisores por tipo de cargo</div>
+      <div style="height: 280px;">
+        <canvas id="chartHier"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-footer">
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- ABA 4 — FALHAS DO SISTEMA -->
+<!-- ======================================================= -->
+<div class="tab-panel" id="tab-4">
+
+  <div class="section-title" style="margin-bottom: 6px;">Falhas do Sistema</div>
+  <div class="section-subtitle">
+    Problemas identificados diretamente nos dados exportados do InChurch. Nenhum deste é suposição — todos estão nos arquivos.
+  </div>
+
+  <!-- INCIDENTE DE SEGURANÇA -->
+  <div class="incident-card">
+    <div class="incident-card-header">
+      <div class="incident-icon">🚨</div>
+      <div>
+        <div class="incident-title">Incidente Grave: Perfis de Membros Foram Mesclados Automaticamente</div>
+        <div style="margin-top: 6px;">
+          <span class="badge badge-red">Segurança de Dados</span>
+          <span class="badge badge-red" style="margin-left: 6px;">Maio / 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="incident-section">
+      <div class="incident-section-label">O que aconteceu</div>
+      <p>O InChurch rodou uma rotina automática que fundiu perfis de membros que tinham o mesmo primeiro nome. Vários "Bruno" foram tratados como uma única pessoa — em menos de 3 segundos. O processo foi automático, sem aviso prévio.</p>
+    </div>
+
+    <div class="incident-section">
+      <div class="incident-section-label">Por que é grave</div>
+      <p>Dados pessoais sensíveis (CPF, RG, histórico) de pessoas diferentes podem ter sido misturados e expostos para quem não deveria ver. Isso é uma possível violação da LGPD (Lei Geral de Proteção de Dados).</p>
+    </div>
+
+    <div class="incident-section">
+      <div class="incident-section-label">O que o InChurch disse</div>
+      <p>A mesclagem foi desativada e os perfis foram restaurados. <strong>Protocolo de atendimento: 45143624195.</strong></p>
+    </div>
+
+    <div class="incident-section">
+      <div class="incident-section-label">O que ainda não sabemos</div>
+      <ul class="incident-unknowns">
+        <li>
+          <span>❓</span>
+          <span>Como o sistema garantiu que o CPF do "Bruno A" voltou para o "Bruno A" certo, se ambos tinham só o primeiro nome cadastrado?</span>
+        </li>
+        <li>
+          <span>❓</span>
+          <span>Quantos perfis foram afetados no total? Não recebemos esse relatório de impacto.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="incident-section">
+      <div class="incident-section-label">Por que isso aconteceu — dado que confirma</div>
+      <div class="alert alert-red" style="margin-top: 8px; margin-bottom: 0;">
+        O campo CPF está preenchido em apenas <strong>21% dos participantes</strong>. Sem um identificador único, o sistema não tem como distinguir pessoas com nomes parecidos. Este não é um problema isolado — é uma falha estrutural no cadastro.
+      </div>
+    </div>
+  </div>
+
+  <!-- INCONSISTÊNCIA ENTRE MÓDULOS -->
+  <div class="warning-card">
+    <div class="warning-card-title">⚠️ O mesmo sistema dá números diferentes para a mesma informação</div>
+    <p>Dois módulos do InChurch mostram quantidades diferentes de participantes em células — e não há explicação nos dados para essa diferença.</p>
+    <div class="diff-table-wrapper" style="margin-top: 14px;">
+      <table>
+        <thead>
+          <tr>
+            <th>De onde vem</th>
+            <th class="td-right">Número de participantes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Módulo Participantes (registro direto)</td>
+            <td class="td-right td-mono">6.376</td>
+          </tr>
+          <tr>
+            <td>Módulo Redes (soma de 14 redes)</td>
+            <td class="td-right td-mono">6.346</td>
+          </tr>
+          <tr style="background: #fef3c7;">
+            <td style="font-weight: 700; color: var(--amber);">Diferença inexplicada</td>
+            <td class="td-right td-mono" style="color: var(--amber); font-weight: 700;">30 pessoas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MÓDULOS ISOLADOS -->
+  <div class="warning-card">
+    <div class="warning-card-title">⚠️ Não é possível rastrear a jornada de uma pessoa pelo sistema</div>
+    <p>
+      O InChurch tem um número único de membro — mas ele só existe no módulo de Membros.
+      Ele não aparece em Participantes, nem em Líderes, nem em Supervisores.
+      Por isso, <strong>não há como saber, pelo sistema, se "João Silva" membro é o mesmo "João Silva" que lidera uma célula.</strong>
+      São módulos completamente independentes.
+    </p>
+  </div>
+
+  <!-- TABELA QUALIDADE -->
+  <div class="section">
+    <div class="section-title">Qualidade dos dados por campo</div>
+    <div class="section-subtitle">Percentual de preenchimento de cada campo nos quatro módulos analisados. Verde ≥ 80%, âmbar ≥ 50%, vermelho &lt; 50%.</div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Campo</th>
+            <th>Módulo</th>
+            <th>Preenchimento</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="quality-table-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CAMPOS VAZIOS -->
+  <div class="section">
+    <div class="section-title">Campos completamente vazios</div>
+    <div class="section-subtitle">Estes campos existem no sistema mas nunca foram preenchidos — em nenhum dos 12.752 registros de membros.</div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Campo</th>
+            <th>Módulo</th>
+            <th>Total de registros</th>
+            <th class="td-center">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DNA Alcance concluído</td>
+            <td>Membros</td>
+            <td class="td-mono">12.752</td>
+            <td class="td-center"><span class="badge badge-red">✗ Vazio</span></td>
+          </tr>
+          <tr>
+            <td>Retiro de Integração</td>
+            <td>Membros</td>
+            <td class="td-mono">12.752</td>
+            <td class="td-center"><span class="badge badge-red">✗ Vazio</span></td>
+          </tr>
+          <tr>
+            <td>Trilho de Integração</td>
+            <td>Membros</td>
+            <td class="td-mono">12.752</td>
+            <td class="td-center"><span class="badge badge-red">✗ Vazio</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-red">
+      <strong>Impacto:</strong> Estes campos existem no sistema mas nunca foram preenchidos. Não é possível usar o InChurch para rastrear etapas da jornada do membro — DNA Alcance, Retiro de Integração e Trilho de Integração estão todos em branco.
+    </div>
+  </div>
+
+  <div class="tab-footer">
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- ABA 5 — PROBLEMA DO RESET -->
+<!-- ======================================================= -->
+<div class="tab-panel" id="tab-5">
+
+  <div class="section-title" style="margin-bottom: 6px;">Problema do Reset</div>
+  <div class="section-subtitle">
+    O que acontece quando os dados de participantes nunca são revisados ou limpos.
+  </div>
+
+  <div class="info-box" style="border-left: 4px solid var(--primary);">
+    <p>Quando uma pessoa para de frequentar uma célula mas não é removida do sistema, ela continua contando como participante. Com o tempo, os números ficam inflados e perdem o significado real. <strong>O número 6.376 pode incluir dezenas ou centenas de pessoas que não frequentam mais.</strong></p>
+  </div>
+
+  <!-- CAMPO ÚLTIMA PARTICIPAÇÃO -->
+  <div class="card card-lg" style="margin-bottom: 20px; border-left: 4px solid var(--amber);">
+    <div style="font-size: 15px; font-weight: 700; color: var(--amber); margin-bottom: 10px;">
+      Como funciona o campo "Última Participação"
+    </div>
+    <p style="font-size: 14px; color: var(--gray-700); line-height: 1.6;">
+      O campo "Última Participação" no sistema <strong>não é preenchido automaticamente com uma data</strong>.
+      Ele registra o nome da célula mais a data da reunião, assim:<br><br>
+      <code style="background: var(--gray-100); padding: 8px 12px; border-radius: 6px; display: block; font-size: 13px; color: var(--gray-700);">
+        Fabrício e Andressa Moskwyn – 20/02/2026 – 20:00
+      </code><br>
+      É uma anotação de texto, não um campo de data — por isso o sistema não consegue filtrar automaticamente quem está inativo.
+    </p>
+  </div>
+
+  <!-- STATUS ATIVIDADE -->
+  <div class="section">
+    <div class="section-title">Status de atividade dos 6.376 participantes</div>
+    <div class="section-subtitle">Baseado nas datas extraídas do campo "Última Participação"</div>
+
+    <div class="grid-2" style="margin-bottom: 20px;">
+      <div>
+        <div class="status-row green">
+          <div class="status-dot dot-green"></div>
+          <div class="status-row-label">Ativo recente (abr–mai/2026)</div>
+          <div>
+            <div class="status-row-count">5.498</div>
+            <div class="status-row-pct">86,2%</div>
+          </div>
+        </div>
+        <div class="status-row amber">
+          <div class="status-dot dot-amber"></div>
+          <div class="status-row-label">Atenção (fev–mar/2026)</div>
+          <div>
+            <div class="status-row-count">497</div>
+            <div class="status-row-pct">7,8%</div>
+          </div>
+        </div>
+        <div class="status-row orange">
+          <div class="status-dot dot-orange"></div>
+          <div class="status-row-label">Inativo (jan/2026 – dez/2025)</div>
+          <div>
+            <div class="status-row-count">284</div>
+            <div class="status-row-pct">4,5%</div>
+          </div>
+        </div>
+        <div class="status-row red">
+          <div class="status-dot dot-red"></div>
+          <div class="status-row-label">Muito inativo (antes de 2025)</div>
+          <div>
+            <div class="status-row-count">41</div>
+            <div class="status-row-pct">0,6%</div>
+          </div>
+        </div>
+        <div class="status-row gray">
+          <div class="status-dot dot-gray"></div>
+          <div class="status-row-label">Sem registro de participação</div>
+          <div>
+            <div class="status-row-count">56</div>
+            <div class="status-row-pct">0,9%</div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-wrapper" style="margin-bottom:0;">
+        <div class="chart-title">Distribuição de atividade</div>
+        <div style="height: 240px; display: flex; align-items: center; justify-content: center;">
+          <canvas id="chartAtividade"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE GRÁFICO -->
+  <div class="chart-wrapper">
+    <div class="chart-title">Quando foi a última vez que cada participante compareceu</div>
+    <div class="chart-note">
+      Cada ponto mostra quantas pessoas têm aquele mês como sua última participação registrada.
+      Picos recentes são esperados. O problema são as caudas — pessoas com registros de 2023/2024 ainda no sistema.
+    </div>
+    <div style="height: 300px;">
+      <canvas id="chartTimeline"></canvas>
+    </div>
+  </div>
+
+  <!-- IMPACTO PRÁTICO -->
+  <div class="section">
+    <div class="section-title">Impacto prático</div>
+    <div class="grid-3">
+      <div class="impact-card">
+        <div class="impact-number">71</div>
+        <div class="impact-title">Pessoas cadastradas desde 2021</div>
+        <div class="impact-text">Estão no sistema há mais de 4 anos. Ainda frequentam? O sistema não sabe — elas continuam contando.</div>
+      </div>
+      <div class="impact-card" style="border-top-color: var(--amber);">
+        <div class="impact-number" style="color: var(--amber);">↗ Sem limite</div>
+        <div class="impact-title">Sem reset periódico, o número só cresce</div>
+        <div class="impact-text">Cada ano que passa sem revisão adiciona pessoas que podem ter saído. O número de 6.376 pode incluir dezenas ou centenas que não frequentam mais.</div>
+      </div>
+      <div class="impact-card" style="border-top-color: var(--red);">
+        <div class="impact-number" style="color: var(--red);">!</div>
+        <div class="impact-title">Decisões baseadas em dado inflado</div>
+        <div class="impact-text">Se planejamos estrutura de células para 6.376 pessoas mas parte delas saiu, estamos superdimensionando liderança e subestimando crescimento real.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA INFORMATIVO -->
+  <div class="cta-box">
+    <div class="cta-box-title">O que um "reset" significaria</div>
+    <p>
+      Revisar periodicamente (por exemplo, uma vez por ano) se cada participante ainda frequenta a célula — e remover ou inativar quem não vai mais.
+      Isso tornaria o número de participantes um reflexo real da realidade, permitindo planejamento mais preciso de liderança, espaço e recursos.
+      <br><br>
+      <strong>Não é uma crítica ao trabalho pastoral — é uma questão de qualidade de dados para tomada de decisão.</strong>
+    </p>
+  </div>
+
+  <div class="tab-footer">
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+  </div>
+</div>
+
+</main>
+
+<!-- BOTÃO EXPORTAR -->
+<button id="export-btn" onclick="exportarPNG()">
+  <span>📷</span> Exportar PNG
+</button>
+
+<script>
+/* =========================================================
+   DADOS
+   ========================================================= */
+const DATA = {
+  kpis: {
+    celulas_ativas: 391, celulas_inativas: 6, celulas_total: 397,
+    participantes_modulo: 6376, participantes_redes: 6346, gap_modulos: 30,
+    lideres: 871, supervisores_registros: 169, supervisores_individuos: 317,
+    membros: 12752, redes: 14, visitantes: 93, novos_convertidos: 56
+  },
+  por_ano: {labels:["2021","2022","2023","2024","2025","2026"],values:[71,457,625,1138,2570,1515]},
+  dias: {"Quartas-feiras":143,"Quintas-feiras":120,"Sábados":70,"Sextas-feiras":55,"Segundas-feiras":8,"Terças-feiras":1},
+  categorias: {"Famílias":229,"Jovens":47,"Jovens Famílias":32,"Mulheres":31,"Adoles (Meninas)":17,"Jovens (Moças)":16,"Adoles (Meninos)":9,"Jovens (Rapazes)":5,"Homens":3},
+  redes: [
+    {rede:"PRS REGINALDO E ROSILENE SILVA",celulas:89,part:1396},
+    {rede:"PRS RENATO E MARILZA HENRIQUES",celulas:51,part:949},
+    {rede:"PRS RAFHAEL E MARESSA BARBOSA",celulas:42,part:671},
+    {rede:"GUSTAVO E KÁTIMA SILVA",celulas:31,part:556},
+    {rede:"MARCOS E ANGÉLICA BOLDT",celulas:36,part:547},
+    {rede:"PRS KELLER E SILMARA MAINARDES",celulas:34,part:504},
+    {rede:"PRS RAFAEL E LENARA PADILHA",celulas:35,part:448},
+    {rede:"PRS MARCELO E JOSIANE BOMFIM",celulas:26,part:433},
+    {rede:"PAULO E BRUNA SEPP",celulas:20,part:325},
+    {rede:"PRS MARCELO E ELOIZA NEVES",celulas:13,part:266},
+    {rede:"THIAGO E GRAZIELE PEREIRA",celulas:5,part:131},
+    {rede:"ANDRÉ E DANIELA HUMMEL",celulas:5,part:65},
+    {rede:"PRS MARCIANO E ADRIANA ORTENCIO",celulas:3,part:53},
+    {rede:"INTEGRAÇÃO",celulas:1,part:2}
+  ],
+  perfil: {"Sem Perfil":3846,"Membro":2508,"Frequentador":21,"Visitante":1},
+  freq_dist: {labels:["0–19%","20–39%","40–49%","50–59%","60–69%","70–79%","80–89%","90–100%"],values:[15,9,43,90,123,85,29,3]},
+  freq_mean: 60.7,
+  hier: {"Líder/Supervisor":107,"Supervisor 1":18,"Coord. Pastoral":12,"Supervisor 2":12,"Coordenador":8,"Líder/Coord.":6,"Líder/Coord. Pastoral":3,"Outros":3},
+  ult_por_mes: {
+    labels:["set/23","fev/24","mar/24","mai/24","jun/24","jul/24","ago/24","set/24","nov/24","dez/24","fev/25","mar/25","abr/25","mai/25","jun/25","jul/25","ago/25","set/25","out/25","nov/25","dez/25","jan/26","fev/26","mar/26","abr/26","mai/26"],
+    values:[1,2,3,1,2,1,1,2,2,2,2,15,8,14,14,11,26,27,48,109,10,24,121,376,3440,2058]
+  },
+  qualidade: {
+    "Participantes":{"CPF":21.5,"E-mail":51.6,"Telefone":38.3,"Nome":99.9},
+    "Líderes/Aux":{"CPF":0,"E-mail":99.0,"Telefone":97.9,"Nome":100},
+    "Membros":{"CPF":26.1,"E-mail":99.3,"Telefone":79.6,"Nome":99.9},
+    "Supervisores":{"CPF":0,"E-mail":85,"Telefone":85,"Nome":100}
+  }
+};
+
+/* =========================================================
+   TABS
+   ========================================================= */
+let activeTab = 0;
+const chartsInit = {};
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const idx = parseInt(btn.dataset.tab);
+    switchTab(idx);
+  });
+});
+
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-tab="${idx}"]`).classList.add('active');
+  document.getElementById(`tab-${idx}`).classList.add('active');
+  activeTab = idx;
+  if (!chartsInit[idx]) {
+    chartsInit[idx] = true;
+    initChartsForTab(idx);
+  }
+}
+
+function initChartsForTab(idx) {
+  if (idx === 1) initTab1Charts();
+  if (idx === 2) initTab2Charts();
+  if (idx === 3) initTab3Charts();
+  if (idx === 5) initTab5Charts();
+}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  // close all
+  document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-question').forEach(b => b.classList.remove('open'));
+  if (!isOpen) {
+    answer.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+
+/* =========================================================
+   YEAR FILTER (Tab 1)
+   ========================================================= */
+let chartPorAno = null;
+let selectedYear = 'all';
+
+document.querySelectorAll('.year-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedYear = btn.dataset.year;
+    updateAnoChart();
+  });
+});
+
+function updateAnoChart() {
+  if (!chartPorAno) return;
+  let labels = DATA.por_ano.labels;
+  let values = DATA.por_ano.values;
+  if (selectedYear !== 'all') {
+    const year = selectedYear.replace(' (parcial)', '');
+    const idx = labels.indexOf(year);
+    if (idx !== -1) {
+      labels = [labels[idx]];
+      values = [values[idx]];
+    }
+  }
+  chartPorAno.data.labels = labels;
+  chartPorAno.data.datasets[0].data = values;
+  chartPorAno.update();
+}
+
+/* =========================================================
+   REDES FILTER (Tab 2)
+   ========================================================= */
+let chartRedes = null;
+
+function filterRede() {
+  const val = document.getElementById('rede-filter').value;
+  let filtered = DATA.redes;
+  if (val !== 'all') {
+    filtered = DATA.redes.filter(r => r.rede === val);
+  }
+  updateRedesChart(filtered);
+  updateRedesTable(filtered);
+}
+
+function updateRedesChart(data) {
+  if (!chartRedes) return;
+  chartRedes.data.labels = data.map(r => truncLabel(r.rede, 28));
+  chartRedes.data.datasets[0].data = data.map(r => r.celulas);
+  chartRedes.data.datasets[1].data = data.map(r => r.part);
+  chartRedes.update();
+}
+
+function updateRedesTable(data) {
+  const tbody = document.getElementById('table-redes-body');
+  tbody.innerHTML = data.map(r => {
+    const media = (r.part / r.celulas).toFixed(1);
+    return `<tr>
+      <td>${titleCase(r.rede)}</td>
+      <td class="td-right td-mono">${r.celulas}</td>
+      <td class="td-right td-mono">${fmtNum(r.part)}</td>
+      <td class="td-right td-mono">${media}</td>
+    </tr>`;
+  }).join('');
+}
+
+function truncLabel(str, max) {
+  return str.length > max ? str.slice(0, max) + '…' : str;
+}
+
+function titleCase(str) {
+  return str.split(' ').map(w => {
+    if (['E','DE','DA','DO','DAS','DOS','A','O','AS','OS'].includes(w)) return w.toLowerCase();
+    return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+  }).join(' ');
+}
+
+function fmtNum(n) {
+  return n.toLocaleString('pt-BR');
+}
+
+/* =========================================================
+   QUALITY TABLE (Tab 4)
+   ========================================================= */
+function buildQualityTable() {
+  const tbody = document.getElementById('quality-table-body');
+  const rows = [];
+  for (const [modulo, campos] of Object.entries(DATA.qualidade)) {
+    for (const [campo, pct] of Object.entries(campos)) {
+      let badgeClass, badgeText;
+      if (pct >= 80) { badgeClass = 'badge-green'; badgeText = '✓ Bom'; }
+      else if (pct >= 50) { badgeClass = 'badge-amber'; badgeText = '! Atenção'; }
+      else { badgeClass = 'badge-red'; badgeText = '✗ Baixo'; }
+      const barColor = pct >= 80 ? '#16a34a' : pct >= 50 ? '#d97706' : '#dc2626';
+      rows.push(`<tr>
+        <td>${campo}</td>
+        <td>${modulo}</td>
+        <td>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" style="width:${pct}%; background:${barColor};"></div>
+            </div>
+            <span class="progress-pct" style="color:${barColor};">${pct}%</span>
+          </div>
+        </td>
+        <td><span class="badge ${badgeClass}">${badgeText}</span></td>
+      </tr>`);
+    }
+  }
+  tbody.innerHTML = rows.join('');
+}
+
+/* =========================================================
+   CHARTS — TAB 1
+   ========================================================= */
+function initTab1Charts() {
+  // Por ano
+  const ctxAno = document.getElementById('chartPorAno').getContext('2d');
+  chartPorAno = new Chart(ctxAno, {
+    type: 'bar',
+    data: {
+      labels: DATA.por_ano.labels,
+      datasets: [{
+        label: 'Novos cadastros',
+        data: DATA.por_ano.values,
+        backgroundColor: DATA.por_ano.labels.map(l => l === '2026' ? '#93c5fd' : '#1e40af'),
+        borderRadius: 6,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#f3f4f6' }, ticks: { font: { size: 12 } } },
+        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+
+  // Dias
+  const diasLabels = Object.keys(DATA.dias);
+  const diasValues = Object.values(DATA.dias);
+  const ctxDias = document.getElementById('chartDias').getContext('2d');
+  new Chart(ctxDias, {
+    type: 'bar',
+    data: {
+      labels: diasLabels,
+      datasets: [{
+        label: 'Células',
+        data: diasValues,
+        backgroundColor: '#3b82f6',
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { beginAtZero: true, grid: { color: '#f3f4f6' }, ticks: { font: { size: 11 } } },
+        y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+      }
+    }
+  });
+
+  // Categorias
+  const catLabels = Object.keys(DATA.categorias);
+  const catValues = Object.values(DATA.categorias);
+  const ctxCat = document.getElementById('chartCategorias').getContext('2d');
+  new Chart(ctxCat, {
+    type: 'bar',
+    data: {
+      labels: catLabels,
+      datasets: [{
+        label: 'Células',
+        data: catValues,
+        backgroundColor: '#6366f1',
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { beginAtZero: true, grid: { color: '#f3f4f6' }, ticks: { font: { size: 11 } } },
+        y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+
+  // Perfil (rosca)
+  const perfilLabels = Object.keys(DATA.perfil);
+  const perfilValues = Object.values(DATA.perfil);
+  const ctxPerfil = document.getElementById('chartPerfil').getContext('2d');
+  new Chart(ctxPerfil, {
+    type: 'doughnut',
+    data: {
+      labels: perfilLabels,
+      datasets: [{
+        data: perfilValues,
+        backgroundColor: ['#9ca3af','#1e40af','#16a34a','#d97706'],
+        borderWidth: 2,
+        borderColor: '#fff',
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 12 }, padding: 16 } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.label}: ${fmtNum(ctx.raw)} pessoas`
+          }
+        }
+      }
+    }
+  });
+}
+
+/* =========================================================
+   CHARTS — TAB 2
+   ========================================================= */
+function initTab2Charts() {
+  const ctxRedes = document.getElementById('chartRedes').getContext('2d');
+  chartRedes = new Chart(ctxRedes, {
+    type: 'bar',
+    data: {
+      labels: DATA.redes.map(r => truncLabel(r.rede, 26)),
+      datasets: [
+        {
+          label: 'Células',
+          data: DATA.redes.map(r => r.celulas),
+          backgroundColor: '#1e40af',
+          borderRadius: 4,
+          borderSkipped: false,
+        },
+        {
+          label: 'Participantes',
+          data: DATA.redes.map(r => r.part),
+          backgroundColor: '#93c5fd',
+          borderRadius: 4,
+          borderSkipped: false,
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 12 } } }
+      },
+      scales: {
+        x: { beginAtZero: true, grid: { color: '#f3f4f6' }, ticks: { font: { size: 11 } } },
+        y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+  updateRedesTable(DATA.redes);
+}
+
+/* =========================================================
+   CHARTS — TAB 3
+   ========================================================= */
+function initTab3Charts() {
+  // Histograma frequência
+  const freqColors = DATA.freq_dist.labels.map(l => {
+    const low = parseInt(l.split('–')[0]);
+    if (low < 50) return '#dc2626';
+    if (low < 70) return '#d97706';
+    return '#16a34a';
+  });
+
+  const ctxFreq = document.getElementById('chartFreqDist').getContext('2d');
+  new Chart(ctxFreq, {
+    type: 'bar',
+    data: {
+      labels: DATA.freq_dist.labels,
+      datasets: [{
+        label: 'Células',
+        data: DATA.freq_dist.values,
+        backgroundColor: freqColors,
+        borderRadius: 6,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#f3f4f6' }, ticks: { font: { size: 12 } } },
+        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+
+  // Hierarquia
+  const hierLabels = Object.keys(DATA.hier);
+  const hierValues = Object.values(DATA.hier);
+  const ctxHier = document.getElementById('chartHier').getContext('2d');
+  new Chart(ctxHier, {
+    type: 'bar',
+    data: {
+      labels: hierLabels,
+      datasets: [{
+        label: 'Supervisores',
+        data: hierValues,
+        backgroundColor: '#7c3aed',
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { beginAtZero: true, grid: { color: '#f3f4f6' }, ticks: { font: { size: 12 } } },
+        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+}
+
+/* =========================================================
+   CHARTS — TAB 5
+   ========================================================= */
+function initTab5Charts() {
+  // Rosca atividade
+  const ctxAtiv = document.getElementById('chartAtividade').getContext('2d');
+  new Chart(ctxAtiv, {
+    type: 'doughnut',
+    data: {
+      labels: ['Ativo recente', 'Atenção', 'Inativo', 'Muito inativo', 'Sem registro'],
+      datasets: [{
+        data: [5498, 497, 284, 41, 56],
+        backgroundColor: ['#16a34a', '#d97706', '#ea580c', '#dc2626', '#9ca3af'],
+        borderWidth: 2,
+        borderColor: '#fff',
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12 } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.label}: ${fmtNum(ctx.raw)} pessoas (${(ctx.raw/6376*100).toFixed(1)}%)`
+          }
+        }
+      }
+    }
+  });
+
+  // Timeline
+  const ctxLine = document.getElementById('chartTimeline').getContext('2d');
+  new Chart(ctxLine, {
+    type: 'bar',
+    data: {
+      labels: DATA.ult_por_mes.labels,
+      datasets: [{
+        label: 'Participantes',
+        data: DATA.ult_por_mes.values,
+        backgroundColor: DATA.ult_por_mes.labels.map(l => {
+          if (l.includes('/26')) return '#1e40af';
+          if (l.includes('/25')) return '#60a5fa';
+          return '#dc2626';
+        }),
+        borderRadius: 3,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#f3f4f6' }, ticks: { font: { size: 11 } } },
+        x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45 } }
+      }
+    }
+  });
+}
+
+/* =========================================================
+   EXPORTAR PNG
+   ========================================================= */
+function exportarPNG() {
+  const btn = document.getElementById('export-btn');
+  btn.textContent = 'Gerando...';
+  btn.disabled = true;
+  html2canvas(document.body, { scale: 1.5, useCORS: true, backgroundColor: '#f9fafb' }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = `dashboard-celulas-${new Date().toISOString().slice(0,10)}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.innerHTML = '<span>📷</span> Exportar PNG';
+    btn.disabled = false;
+  }).catch(() => {
+    btn.innerHTML = '<span>📷</span> Exportar PNG';
+    btn.disabled = false;
+  });
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  buildQualityTable();
+  chartsInit[0] = true;
+  // Tab 1 é a segunda aba mas não está ativa ainda — carregar quando ativada
+  // Tab 2, 3, 5 idem
+});
+</script>
+</body>
+</html>
