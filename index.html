@@ -734,17 +734,15 @@ tr:hover td { background: var(--gray-50); }
 <nav class="tabs-nav" id="tabs-nav">
   <button class="tab-btn active" data-tab="0">📋 Antes de Ler</button>
   <button class="tab-btn" data-tab="1">📊 Visão Geral</button>
-  <button class="tab-btn" data-tab="2">🌐 Por Rede</button>
-  <button class="tab-btn" data-tab="3">📈 Frequência</button>
-  <button class="tab-btn" data-tab="4">⚠️ Falhas do Sistema</button>
-  <button class="tab-btn" data-tab="5">🔄 Problema do Reset</button>
+  <button class="tab-btn" data-tab="2">👥 Atividade Real</button>
+  <button class="tab-btn" data-tab="3">🌐 Por Rede</button>
+  <button class="tab-btn" data-tab="4">📈 Frequência</button>
+  <button class="tab-btn" data-tab="5">⚠️ Falhas do Sistema</button>
+  <button class="tab-btn" data-tab="6">🔄 Problema do Reset</button>
 </nav>
 
 <main>
 
-<!-- ======================================================= -->
-<!-- ABA 0 — ANTES DE LER -->
-<!-- ======================================================= -->
 <div class="tab-panel active" id="tab-0">
 
   <div class="section">
@@ -767,7 +765,7 @@ tr:hover td { background: var(--gray-50); }
         <div class="file-card-icon">📁</div>
         <div class="file-card-name">Células <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link">📥</a></div>
         <div class="file-card-count">397 registros</div>
-        <div class="file-card-desc">Lista de todas as células cadastradas</div>
+        <div class="file-card-desc">Lista de todas as células cadastradas (exportado 10/05)</div>
       </div>
       <div class="file-card">
         <div class="file-card-icon">📁</div>
@@ -798,6 +796,18 @@ tr:hover td { background: var(--gray-50); }
         <div class="file-card-name">Redes <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link">📥</a></div>
         <div class="file-card-count">14 registros</div>
         <div class="file-card-desc">As 14 redes pastorais</div>
+      </div>
+      <div class="file-card" style="border-left: 3px solid var(--primary);">
+        <div class="file-card-icon">📊</div>
+        <div class="file-card-name">Relatórios de Reunião <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link">📥</a></div>
+        <div class="file-card-count">49.234 registros</div>
+        <div class="file-card-desc">Histórico de reuniões com participantes nominais — desde set/2021</div>
+      </div>
+      <div class="file-card" style="border-left: 3px solid var(--primary);">
+        <div class="file-card-icon">📊</div>
+        <div class="file-card-name">Células com Líderes (EN) <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link">📥</a></div>
+        <div class="file-card-count">397 registros</div>
+        <div class="file-card-desc">Cadastro com categorias, frequência mensal e auxiliares — exportado 12/05</div>
       </div>
     </div>
     <div style="text-align:center;margin-top:16px">
@@ -1056,6 +1066,103 @@ tr:hover td { background: var(--gray-50); }
 <!-- ======================================================= -->
 <div class="tab-panel" id="tab-2">
 
+  <div class="section-title" style="margin-bottom:6px;">Atividade Real das Células</div>
+  <div class="section-subtitle">
+    Dados extraídos dos relatórios de reunião (49.234 registros desde 2021) e do cadastro de células com líderes exportado em 12/05/2026.
+    Participantes únicos são contados pelos nomes nominais presentes nos relatórios de cada reunião.
+  </div>
+
+  <!-- KPIs principais -->
+  <div class="grid-3" style="margin-bottom:20px;">
+    <div class="kpi-card kpi-main kpi-green">
+      <div class="kpi-label">Participantes únicos (últimos 3 meses)</div>
+      <div class="kpi-value kpi-value-green">6.249</div>
+      <div class="kpi-note">Nomes distintos nos relatórios de reunião — fev a mai/2026</div>
+      <div class="kpi-source">Fonte: Relatórios de Reunião (Relatorios-2026_05_10)</div>
+    </div>
+    <div class="kpi-card kpi-main kpi-blue">
+      <div class="kpi-label">Células reportando ativamente</div>
+      <div class="kpi-value kpi-value-blue">379<span style="font-size:18px;font-weight:500;color:var(--gray-400)"> / 391</span></div>
+      <div class="kpi-note">Das 391 ativas, 379 enviaram relatório nos últimos 3 meses</div>
+      <div class="kpi-source">Fonte: Relatórios de Reunião</div>
+    </div>
+    <div class="kpi-card kpi-main kpi-amber">
+      <div class="kpi-label">Células ativas sem relatório</div>
+      <div class="kpi-value" style="color:var(--amber);">12</div>
+      <div class="kpi-note">Cadastradas como ativas mas sem nenhum relatório nos últimos 3 meses</div>
+      <div class="kpi-source">Fonte: cruzamento Cadastro × Relatórios</div>
+    </div>
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-label">Líderes únicos cadastrados</div>
+      <div class="kpi-value">690</div>
+      <div class="kpi-note">698 registros de líder — casais contam como 2 nomes</div>
+      <div class="kpi-source">Fonte: Cell_Management_Cells (12/05/2026)</div>
+    </div>
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-label">Auxiliares cadastrados</div>
+      <div class="kpi-value">233</div>
+      <div class="kpi-note">234 registros de auxiliar por célula</div>
+      <div class="kpi-source">Fonte: Cell_Management_Cells (12/05/2026)</div>
+    </div>
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-label">Média de participantes/reunião</div>
+      <div class="kpi-value">9,6</div>
+      <div class="kpi-note">Média dos últimos 3 meses (4.363 reuniões preenchidas)</div>
+      <div class="kpi-source">Fonte: Relatórios de Reunião</div>
+    </div>
+  </div>
+
+  <!-- Alerta comparativo -->
+  <div class="alert alert-amber" style="margin-bottom:24px;">
+    <div class="alert-title">🔍 Comparativo: módulo Participantes × relatórios de reunião</div>
+    O módulo Participantes (cadastro) registra <strong>6.376 vínculos</strong>. Os relatórios de reunião mostram
+    <strong>6.249 nomes únicos</strong> nos últimos 3 meses. A diferença de <strong>127 pessoas</strong> pode refletir
+    participantes cadastrados que não foram às reuniões recentes — os dois números vêm de fontes distintas dentro do mesmo sistema.
+  </div>
+
+  <!-- Evolução mensal -->
+  <div class="chart-wrapper" style="margin-bottom:20px;">
+    <div class="chart-title">Evolução mensal: células reportando e presenças (2025–2026)</div>
+    <div class="chart-note">Cada mês mostra quantas células enviaram relatório preenchido e a soma total de presenças naquele mês.
+      Dezembro/2025 e Janeiro/2026 têm queda por recesso — comportamento esperado.</div>
+    <div style="height:280px;">
+      <canvas id="chartEvolucao"></canvas>
+    </div>
+  </div>
+
+  <!-- Frequência por rede -->
+  <div class="chart-wrapper" style="margin-bottom:20px;">
+    <div class="chart-title">Frequência média mensal por Rede Pastoral</div>
+    <div class="chart-note">Percentual médio de frequência das células de cada rede, conforme registro no sistema (campo Monthly Frequency).</div>
+    <div style="height:320px;">
+      <canvas id="chartFreqRede"></canvas>
+    </div>
+  </div>
+
+  <!-- 12 células ghost -->
+  <div class="section" style="margin-bottom:20px;">
+    <div class="section-title">12 células ativas sem relatório nos últimos 3 meses</div>
+    <div class="alert alert-red" style="margin-bottom:16px;">
+      <div class="alert-title">⚠️ Cadastradas como ativas — sem nenhum relatório de reunião desde fevereiro/2026</div>
+      Estas células aparecem como ativas no sistema mas não têm relatório preenchido nos últimos 3 meses.
+      Podem estar funcionando sem registrar, podem estar inativas ou podem ser um problema de cadastro.
+    </div>
+    <div class="grid-2">
+      <div id="ghost-cells-list"></div>
+    </div>
+  </div>
+
+  <div class="section-footer">
+    Fonte: cruzamento entre Cell_Management_Cells-2026_05_12 e Relatorios-2026_05_10 |
+    <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" style="color:inherit">📥 Baixar arquivos originais</a>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- ABA 3 — FREQUÊNCIA -->
+<!-- ======================================================= -->
+<div class="tab-panel" id="tab-3">
+
   <div class="section-title" style="margin-bottom: 6px;">Por Rede Pastoral</div>
   <div class="section-subtitle">
     Como as 14 redes pastorais estão distribuídas. Cada rede tem um casal responsável.
@@ -1115,9 +1222,9 @@ tr:hover td { background: var(--gray-50); }
 </div>
 
 <!-- ======================================================= -->
-<!-- ABA 3 — FREQUÊNCIA -->
+<!-- ABA 2 — ATIVIDADE REAL (Relatórios + Cell_Management)  -->
 <!-- ======================================================= -->
-<div class="tab-panel" id="tab-3">
+<div class="tab-panel" id="tab-4">
 
   <div class="section-title" style="margin-bottom: 6px;">Frequência das Células</div>
   <div class="section-subtitle">
@@ -1178,7 +1285,7 @@ tr:hover td { background: var(--gray-50); }
 <!-- ======================================================= -->
 <!-- ABA 4 — FALHAS DO SISTEMA -->
 <!-- ======================================================= -->
-<div class="tab-panel" id="tab-4">
+<div class="tab-panel" id="tab-5">
 
   <div class="section-title" style="margin-bottom: 6px;">Falhas do Sistema</div>
   <div class="section-subtitle">
@@ -1345,7 +1452,7 @@ tr:hover td { background: var(--gray-50); }
 <!-- ======================================================= -->
 <!-- ABA 5 — PROBLEMA DO RESET -->
 <!-- ======================================================= -->
-<div class="tab-panel" id="tab-5">
+<div class="tab-panel" id="tab-6">
 
   <div class="section-title" style="margin-bottom: 6px;">Problema do Reset</div>
   <div class="section-subtitle">
@@ -1479,6 +1586,7 @@ tr:hover td { background: var(--gray-50); }
 </div>
 
 </main>
+</main>
 
 <!-- BOTÃO EXPORTAR -->
 <button id="export-btn" onclick="exportarPNG()">
@@ -1531,6 +1639,21 @@ const DATA = {
   }
 };
 
+
+const DATA_ATIVIDADE = {
+  evolucao: {
+    labels: ['2025/01','2025/02','2025/03','2025/04','2025/05','2025/06','2025/07','2025/08','2025/09','2025/10','2025/11','2025/12','2026/01','2026/02','2026/03','2026/04','2026/05'],
+    celulas: [188,274,283,296,310,306,301,332,340,346,355,24,234,364,377,374,208],
+    participantes: [2182,10539,9580,12570,13156,11580,5093,12513,12606,15310,12942,351,3243,10604,13838,15247,2069]
+  },
+  freqRede: {
+    labels: ['André e Daniela Hummel','Gustavo e Kátima Silva','Prs Marciano e Adriana Ortencio','Paulo e Bruna Sepp','Prs Reginaldo e Rosilene Silva','Prs Marcelo e Josiane Bomfim','Marcos e Angélica Boldt','Prs Rafael e Lenara Padilha','Prs Renato e Marilza Henriques','Prs Keller e Silmara Mainardes','Prs Rafhael e Maressa Barbosa','Thiago e Graziele Pereira','Integração'],
+    freq: [70.5,64.1,63.7,62.6,62.4,61.4,60.8,60.5,60.4,59.6,57.8,47.2,0.0],
+    celulas: [6,31,3,20,101,26,36,35,51,34,42,5,1]
+  },
+  ghostCells: ['André e Maria Zonta','Andressa Moskwyn','Arnaldo e Viviane Kustin Nascimento','Carlos e Cristiane Estegues','Felipe e Joelma Holcsik','Integração','Luis Fernando e Fábia Alves','Mariza Portes Guimarães','Nicolas Lazzeri','Rafael e Mariana Oliveira','Rony Alberto e Bruna Martins Corrêa','Thiago e Rita Streicher']
+};
+
 /* =========================================================
    TABS
    ========================================================= */
@@ -1560,7 +1683,8 @@ function initChartsForTab(idx) {
   if (idx === 1) initTab1Charts();
   if (idx === 2) initTab2Charts();
   if (idx === 3) initTab3Charts();
-  if (idx === 5) initTab5Charts();
+  if (idx === 4) initTab4Charts();
+  if (idx === 6) initTab6Charts();
 }
 
 /* =========================================================
@@ -1806,7 +1930,7 @@ function initTab1Charts() {
 /* =========================================================
    CHARTS — TAB 2
    ========================================================= */
-function initTab2Charts() {
+function initTab3Charts() {
   const ctxRedes = document.getElementById('chartRedes').getContext('2d');
   chartRedes = new Chart(ctxRedes, {
     type: 'bar',
@@ -1844,10 +1968,122 @@ function initTab2Charts() {
   updateRedesTable(DATA.redes);
 }
 
+
+/* =========================================================
+   CHARTS — TAB 2 (Atividade Real)
+   ========================================================= */
+function initTab2Charts() {
+  // Evolução mensal — dual axis
+  const ctxEv = document.getElementById('chartEvolucao').getContext('2d');
+  new Chart(ctxEv, {
+    type: 'bar',
+    data: {
+      labels: DATA_ATIVIDADE.evolucao.labels,
+      datasets: [
+        {
+          label: 'Células reportando',
+          data: DATA_ATIVIDADE.evolucao.celulas,
+          backgroundColor: DATA_ATIVIDADE.evolucao.labels.map(l => {
+            if (l === '2025/12' || l === '2026/01') return '#fbbf24';
+            return '#1e40af';
+          }),
+          borderRadius: 4,
+          borderSkipped: false,
+          yAxisID: 'y'
+        },
+        {
+          type: 'line',
+          label: 'Total de presenças',
+          data: DATA_ATIVIDADE.evolucao.participantes,
+          borderColor: '#16a34a',
+          backgroundColor: 'rgba(22,163,74,0.08)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 4,
+          pointBackgroundColor: '#16a34a',
+          yAxisID: 'y1'
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 12 }, padding: 16 } },
+        tooltip: { mode: 'index', intersect: false }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 }, maxRotation: 45 } },
+        y: {
+          beginAtZero: true,
+          position: 'left',
+          title: { display: true, text: 'Células reportando', font: { size: 11 } },
+          grid: { color: '#f3f4f6' },
+          ticks: { font: { size: 11 } }
+        },
+        y1: {
+          beginAtZero: true,
+          position: 'right',
+          title: { display: true, text: 'Total presenças', font: { size: 11 } },
+          grid: { drawOnChartArea: false },
+          ticks: { font: { size: 11 } }
+        }
+      }
+    }
+  });
+
+  // Frequência por rede — horizontal bar
+  const ctxFR = document.getElementById('chartFreqRede').getContext('2d');
+  new Chart(ctxFR, {
+    type: 'bar',
+    data: {
+      labels: DATA_ATIVIDADE.freqRede.labels,
+      datasets: [{
+        label: 'Frequência média (%)',
+        data: DATA_ATIVIDADE.freqRede.freq,
+        backgroundColor: DATA_ATIVIDADE.freqRede.freq.map(v => {
+          if (v >= 65) return '#16a34a';
+          if (v >= 50) return '#1e40af';
+          if (v > 0)   return '#d97706';
+          return '#dc2626';
+        }),
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.raw}% — ${DATA_ATIVIDADE.freqRede.celulas[ctx.dataIndex]} células`
+          }
+        }
+      },
+      scales: {
+        x: { beginAtZero: true, max: 100, grid: { color: '#f3f4f6' }, ticks: { callback: v => v + '%', font: { size: 11 } } },
+        y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+      }
+    }
+  });
+
+  // Ghost cells list
+  const container = document.getElementById('ghost-cells-list');
+  if (container) {
+    container.innerHTML = DATA_ATIVIDADE.ghostCells.map(name => `
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;margin-bottom:8px;">
+        <span style="color:#dc2626;font-size:18px;">⚠</span>
+        <span style="font-weight:500;color:#374151;">${name}</span>
+      </div>
+    `).join('');
+  }
+}
+
 /* =========================================================
    CHARTS — TAB 3
    ========================================================= */
-function initTab3Charts() {
+function initTab4Charts() {
   // Histograma frequência
   const freqColors = DATA.freq_dist.labels.map(l => {
     const low = parseInt(l.split('–')[0]);
@@ -1910,7 +2146,7 @@ function initTab3Charts() {
 /* =========================================================
    CHARTS — TAB 5
    ========================================================= */
-function initTab5Charts() {
+function initTab6Charts() {
   // Rosca atividade
   const ctxAtiv = document.getElementById('chartAtividade').getContext('2d');
   new Chart(ctxAtiv, {
