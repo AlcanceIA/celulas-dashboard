@@ -704,6 +704,18 @@ tr:hover td { background: var(--gray-50); }
 }
 .inline-pair .main-val { font-size: 28px; font-weight: 800; }
 .inline-pair .sub-val { font-size: 16px; font-weight: 600; }
+
+  .drive-link { color: #1e40af; text-decoration: none; font-size: 14px; vertical-align: middle; }
+  .drive-link:hover { text-decoration: underline; }
+  .drive-link-sm { color: #1e40af; text-decoration: none; font-size: 11px; }
+  .drive-link-sm:hover { text-decoration: underline; }
+  .drive-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #1e40af; color: #fff; text-decoration: none;
+    padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600;
+    transition: background .2s;
+  }
+  .drive-btn:hover { background: #1d3a9e; }
 </style>
 </head>
 <body>
@@ -753,40 +765,45 @@ tr:hover td { background: var(--gray-50); }
     <div class="grid-3">
       <div class="file-card">
         <div class="file-card-icon">📁</div>
-        <div class="file-card-name">Células</div>
+        <div class="file-card-name">Células <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link">📥</a></div>
         <div class="file-card-count">397 registros</div>
         <div class="file-card-desc">Lista de todas as células cadastradas</div>
       </div>
       <div class="file-card">
         <div class="file-card-icon">📁</div>
-        <div class="file-card-name">Participantes</div>
+        <div class="file-card-name">Participantes <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link">📥</a></div>
         <div class="file-card-count">6.376 registros</div>
         <div class="file-card-desc">Pessoas vinculadas a uma célula</div>
       </div>
       <div class="file-card">
         <div class="file-card-icon">📁</div>
-        <div class="file-card-name">Líderes e Auxiliares</div>
+        <div class="file-card-name">Líderes e Auxiliares <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link">📥</a></div>
         <div class="file-card-count">871 registros</div>
         <div class="file-card-desc">Quem lidera as células</div>
       </div>
       <div class="file-card">
         <div class="file-card-icon">📁</div>
-        <div class="file-card-name">Supervisores</div>
+        <div class="file-card-name">Supervisores <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link">📥</a></div>
         <div class="file-card-count">169 registros</div>
         <div class="file-card-desc">Quem supervisiona os líderes</div>
       </div>
       <div class="file-card">
         <div class="file-card-icon">📁</div>
-        <div class="file-card-name">Membros</div>
+        <div class="file-card-name">Membros <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link">📥</a></div>
         <div class="file-card-count">12.752 registros</div>
         <div class="file-card-desc">Todos os membros da Igreja (módulo separado)</div>
       </div>
       <div class="file-card">
         <div class="file-card-icon">📁</div>
-        <div class="file-card-name">Redes</div>
+        <div class="file-card-name">Redes <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link">📥</a></div>
         <div class="file-card-count">14 registros</div>
         <div class="file-card-desc">As 14 redes pastorais</div>
       </div>
+    </div>
+    <div style="text-align:center;margin-top:16px">
+      <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-btn">
+        📥 Baixar todos os arquivos originais no Google Drive
+      </a>
     </div>
   </div>
 
@@ -890,7 +907,7 @@ tr:hover td { background: var(--gray-50); }
   </div>
 
   <div class="tab-footer">
-    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" style="color:inherit">📥 Baixar arquivos originais</a> | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
   </div>
 </div>
 
@@ -913,36 +930,36 @@ tr:hover td { background: var(--gray-50); }
         <span class="badge badge-green">✓ Ativas</span>
         <span class="badge badge-red">6 inativas</span>
       </div>
-      <div class="kpi-source">Fonte: arquivo Células</div>
+      <div class="kpi-source">Fonte: arquivo Células · <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link-sm">📥 baixar</a></div>
     </div>
     <div class="kpi-card kpi-main kpi-blue">
       <div class="kpi-label">Pessoas em células</div>
       <div class="kpi-value kpi-value-blue">6.376</div>
       <div class="kpi-note">registradas no módulo Participantes</div>
-      <div class="kpi-source">Fonte: arquivo Participantes</div>
+      <div class="kpi-source">Fonte: arquivo Participantes · <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link-sm">📥 baixar</a></div>
     </div>
     <div class="kpi-card kpi-main kpi-blue">
       <div class="kpi-label">Líderes e Auxiliares</div>
       <div class="kpi-value kpi-value-blue">871</div>
       <div class="kpi-note">registros no sistema</div>
-      <div class="kpi-source">Fonte: arquivo Líderes</div>
+      <div class="kpi-source">Fonte: arquivo Líderes · <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link-sm">📥 baixar</a></div>
     </div>
     <div class="kpi-card kpi-blue">
       <div class="kpi-label">Redes Pastorais</div>
       <div class="kpi-value">14</div>
-      <div class="kpi-source">Fonte: arquivo Redes</div>
+      <div class="kpi-source">Fonte: arquivo Redes · <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link-sm">📥 baixar</a></div>
     </div>
     <div class="kpi-card kpi-gray">
       <div class="kpi-label">Membros da Igreja</div>
       <div class="kpi-value">12.752</div>
       <div class="kpi-note" style="color: var(--amber); font-weight: 500;">módulo separado — não é a soma de células</div>
-      <div class="kpi-source">Fonte: arquivo Membros</div>
+      <div class="kpi-source">Fonte: arquivo Membros · <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link-sm">📥 baixar</a></div>
     </div>
     <div class="kpi-card kpi-gray">
       <div class="kpi-label">Registros de Supervisores</div>
       <div class="kpi-value">169</div>
       <div class="kpi-note">casais = 2 pessoas por registro. Total estimado: ~317 indivíduos</div>
-      <div class="kpi-source">Fonte: arquivo Supervisores</div>
+      <div class="kpi-source">Fonte: arquivo Supervisores · <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link-sm">📥 baixar</a></div>
     </div>
   </div>
 
@@ -1010,12 +1027,12 @@ tr:hover td { background: var(--gray-50); }
     <div class="kpi-card kpi-amber">
       <div class="kpi-label">Visitantes</div>
       <div class="kpi-value">93</div>
-      <div class="kpi-source">Fonte: arquivo Células</div>
+      <div class="kpi-source">Fonte: arquivo Células · <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link-sm">📥 baixar</a></div>
     </div>
     <div class="kpi-card kpi-blue">
       <div class="kpi-label">Novos Convertidos</div>
       <div class="kpi-value">56</div>
-      <div class="kpi-source">Fonte: arquivo Células</div>
+      <div class="kpi-source">Fonte: arquivo Células · <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link-sm">📥 baixar</a></div>
     </div>
     <div class="kpi-card kpi-blue">
       <div class="kpi-label">Total de Células</div>
@@ -1030,7 +1047,7 @@ tr:hover td { background: var(--gray-50); }
   </div>
 
   <div class="tab-footer">
-    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" style="color:inherit">📥 Baixar arquivos originais</a> | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
   </div>
 </div>
 
@@ -1089,11 +1106,11 @@ tr:hover td { background: var(--gray-50); }
   </div>
 
   <div class="chart-note" style="margin-top: -12px;">
-    Fonte: arquivo Gestao_de_Membresia_Redes — InChurch 10/05/2026
+    Fonte: arquivo Gestao_de_Membresia_Redes — InChurch 10/05/2026 · <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" class="drive-link-sm">📥 baixar</a>
   </div>
 
   <div class="tab-footer">
-    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" style="color:inherit">📥 Baixar arquivos originais</a> | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
   </div>
 </div>
 
@@ -1154,7 +1171,7 @@ tr:hover td { background: var(--gray-50); }
   </div>
 
   <div class="tab-footer">
-    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" style="color:inherit">📥 Baixar arquivos originais</a> | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
   </div>
 </div>
 
@@ -1321,7 +1338,7 @@ tr:hover td { background: var(--gray-50); }
   </div>
 
   <div class="tab-footer">
-    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" style="color:inherit">📥 Baixar arquivos originais</a> | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
   </div>
 </div>
 
@@ -1457,7 +1474,7 @@ tr:hover td { background: var(--gray-50); }
   </div>
 
   <div class="tab-footer">
-    Fonte dos dados: InChurch — exportado em 10/05/2026 | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
+    Fonte dos dados: InChurch — exportado em 10/05/2026 | <a href="https://drive.google.com/drive/folders/1g9JgksnzEhiOUVEohnlH3Xpa6rMZktTI?usp=sharing" target="_blank" style="color:inherit">📥 Baixar arquivos originais</a> | Esta análise apresenta os dados como estão no sistema, sem interpretações adicionais.
   </div>
 </div>
 
