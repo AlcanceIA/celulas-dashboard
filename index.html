@@ -1185,7 +1185,6 @@ tr:hover td { background: var(--gray-50); }
       <option value="THIAGO E GRAZIELE PEREIRA">THIAGO E GRAZIELE PEREIRA</option>
       <option value="ANDRÉ E DANIELA HUMMEL">ANDRÉ E DANIELA HUMMEL</option>
       <option value="PRS MARCIANO E ADRIANA ORTENCIO">PRS MARCIANO E ADRIANA ORTENCIO</option>
-      <option value="INTEGRAÇÃO">INTEGRAÇÃO</option>
     </select>
   </div>
 
@@ -1424,23 +1423,11 @@ tr:hover td { background: var(--gray-50); }
             <td class="td-mono">12.752</td>
             <td class="td-center"><span class="badge badge-red">✗ Vazio</span></td>
           </tr>
-          <tr>
-            <td>Retiro de Integração</td>
-            <td>Membros</td>
-            <td class="td-mono">12.752</td>
-            <td class="td-center"><span class="badge badge-red">✗ Vazio</span></td>
-          </tr>
-          <tr>
-            <td>Trilho de Integração</td>
-            <td>Membros</td>
-            <td class="td-mono">12.752</td>
-            <td class="td-center"><span class="badge badge-red">✗ Vazio</span></td>
-          </tr>
         </tbody>
       </table>
     </div>
     <div class="alert alert-red">
-      <strong>Impacto:</strong> Estes campos existem no sistema mas nunca foram preenchidos. Não é possível usar o InChurch para rastrear etapas da jornada do membro — DNA Alcance, Retiro de Integração e Trilho de Integração estão todos em branco.
+      <strong>Impacto:</strong> Estes campos existem no sistema mas nunca foram preenchidos. Não é possível usar o InChurch para rastrear etapas da jornada do membro — DNA Alcance estão todos em branco.
     </div>
   </div>
 
@@ -1620,8 +1607,7 @@ const DATA = {
     {rede:"PRS MARCELO E ELOIZA NEVES",celulas:13,part:266},
     {rede:"THIAGO E GRAZIELE PEREIRA",celulas:5,part:131},
     {rede:"ANDRÉ E DANIELA HUMMEL",celulas:5,part:65},
-    {rede:"PRS MARCIANO E ADRIANA ORTENCIO",celulas:3,part:53},
-    {rede:"INTEGRAÇÃO",celulas:1,part:2}
+    {rede:"PRS MARCIANO E ADRIANA ORTENCIO",celulas:3,part:53}
   ],
   perfil: {"Sem Perfil":3846,"Membro":2508,"Frequentador":21,"Visitante":1},
   freq_dist: {labels:["0–19%","20–39%","40–49%","50–59%","60–69%","70–79%","80–89%","90–100%"],values:[15,9,43,90,123,85,29,3]},
@@ -1647,11 +1633,11 @@ const DATA_ATIVIDADE = {
     participantes: [2182,10539,9580,12570,13156,11580,5093,12513,12606,15310,12942,351,3243,10604,13838,15247,2069]
   },
   freqRede: {
-    labels: ['André e Daniela Hummel','Gustavo e Kátima Silva','Prs Marciano e Adriana Ortencio','Paulo e Bruna Sepp','Prs Reginaldo e Rosilene Silva','Prs Marcelo e Josiane Bomfim','Marcos e Angélica Boldt','Prs Rafael e Lenara Padilha','Prs Renato e Marilza Henriques','Prs Keller e Silmara Mainardes','Prs Rafhael e Maressa Barbosa','Thiago e Graziele Pereira','Integração'],
-    freq: [70.5,64.1,63.7,62.6,62.4,61.4,60.8,60.5,60.4,59.6,57.8,47.2,0.0],
-    celulas: [6,31,3,20,101,26,36,35,51,34,42,5,1]
+    labels: ['André e Daniela Hummel','Gustavo e Kátima Silva','Prs Marciano e Adriana Ortencio','Paulo e Bruna Sepp','Prs Reginaldo e Rosilene Silva','Prs Marcelo e Josiane Bomfim','Marcos e Angélica Boldt','Prs Rafael e Lenara Padilha','Prs Renato e Marilza Henriques','Prs Keller e Silmara Mainardes','Prs Rafhael e Maressa Barbosa','Thiago e Graziele Pereira'],
+    freq: [70.5,64.1,63.7,62.6,62.4,61.4,60.8,60.5,60.4,59.6,57.8,47.2],
+    celulas: [6,31,3,20,101,26,36,35,51,34,42,5]
   },
-  ghostCells: ['André e Maria Zonta','Andressa Moskwyn','Arnaldo e Viviane Kustin Nascimento','Carlos e Cristiane Estegues','Felipe e Joelma Holcsik','Integração','Luis Fernando e Fábia Alves','Mariza Portes Guimarães','Nicolas Lazzeri','Rafael e Mariana Oliveira','Rony Alberto e Bruna Martins Corrêa','Thiago e Rita Streicher']
+  ghostCells: ['André e Maria Zonta','Andressa Moskwyn','Arnaldo e Viviane Kustin Nascimento','Carlos e Cristiane Estegues','Felipe e Joelma Holcsik','Luis Fernando e Fábia Alves','Mariza Portes Guimarães','Nicolas Lazzeri','Rafael e Mariana Oliveira','Rony Alberto e Bruna Martins Corrêa','Thiago e Rita Streicher']
 };
 
 /* =========================================================
